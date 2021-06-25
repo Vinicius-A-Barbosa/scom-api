@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import scom.project.api.dto.TrainDTO;
-import scom.project.api.service.TrainService;
+import scom.project.api.dto.EngineDTO;
+import scom.project.api.service.EngineService;
 
 @RestController
-@RequestMapping("train")
+@RequestMapping("engine")
 @CrossOrigin(origins = "*")
-public class TrainController {
-	
+public class EngineController {
+
 	@Autowired
-	private TrainService trainService;
+	private EngineService engineService;
 	
 	@GetMapping("/all")
-	public List<TrainDTO> getTrainList() {
-		return trainService.findAll();
+	public List<EngineDTO> getEngineList() {
+		return engineService.findAll();
 	}
 }

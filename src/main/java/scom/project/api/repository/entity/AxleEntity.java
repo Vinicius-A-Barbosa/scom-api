@@ -13,18 +13,21 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "EQUIPAMENTOS_TREM")
-public class TrainEntity implements Serializable {
+@Table(name = "EQUIPAMENTOS_EIXO")
+public class AxleEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "CODIGO_TREM")
-	private String trainCode;
+	@Column(name = "CODIGO_EIXO")
+	private String axleCode;
 	
-	@Column(name = "DISPONIBILIDADE_TREM")
-	private String trainAvailability;
+	@Column(name = "DISPONIBILIDADE_EIXO")
+	private String axleAvailability;
 	
-	@Column(name = "SERIE_TREM")
-	private String trainSerie;
+	@Column(name = "TIPO_EIXO")
+	private String axleType;
+	
+	@Column(name = "SERIE_EIXO")
+	private String axleSerie;
 }

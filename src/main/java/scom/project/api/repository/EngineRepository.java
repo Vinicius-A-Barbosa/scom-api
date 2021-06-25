@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import scom.project.api.repository.entity.TrainEntity;
+import scom.project.api.repository.entity.EngineEntity;
 
 @Repository
-public interface TrainRepository extends CrudRepository<TrainEntity, String> {
-	List<TrainEntity> findAll();
+public interface EngineRepository extends CrudRepository<EngineEntity, String> {
+	List<EngineEntity> findAll();
 }
