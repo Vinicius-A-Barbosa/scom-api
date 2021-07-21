@@ -30,10 +30,10 @@ public class AxleShiftEntity implements Serializable {
 		@JoinColumn(name = "CODIGO_EIXO", referencedColumnName = "CODIGO_EIXO", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_ENTRADA_EIXO", referencedColumnName = "DATA_KM_EIXO", insertable = false, updatable = false)
 	})
-	private AxleKilometersEntity AxleKilometersEntityIn;
+	private AxleKilometersEntity axleKilometersEntityIn;
 	
 	@Transient
-	private Integer axleKmIn = AxleKilometersEntityIn.getAxleKm();
+	private Integer axleKmIn = axleKilometersEntityIn.getAxleKm();
 	
 	@Column(name = "DATA_SAIDA_EIXO")
 	private LocalDate axleDateOut;
@@ -42,10 +42,10 @@ public class AxleShiftEntity implements Serializable {
 		@JoinColumn(name = "CODIGO_EIXO", referencedColumnName = "CODIGO_EIXO", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_SAIDA_EIXO", referencedColumnName = "DATA_KM_EIXO", insertable = false, updatable = false)
 	})
-	private AxleKilometersEntity AxleKilometersEntityOut;
+	private AxleKilometersEntity axleKilometersEntityOut;
 	
 	@Transient
-	private Integer axleKmOut = AxleKilometersEntityOut.getAxleKm();
+	private Integer axleKmOut = axleKilometersEntityOut.getAxleKm();
 	
 	@Column(name = "KM_ACUMULADO_EIXO")
 	private Integer axleKmAccumulated;
