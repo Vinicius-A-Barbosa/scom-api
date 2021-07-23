@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import scom.project.api.repository.entity.pk.ConverterActivitiesMaintenancePK;
@@ -19,6 +20,7 @@ import scom.project.api.repository.entity.pk.ConverterActivitiesMaintenancePK;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode
 @Table(name = "ATIVIDADES_MANUTENCAO_CONVERSOR")
 public class ConverterActivitiesMaintenanceEntity implements Serializable {
 
