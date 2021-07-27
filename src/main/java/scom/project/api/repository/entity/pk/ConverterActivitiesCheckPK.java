@@ -25,6 +25,9 @@ public class ConverterActivitiesCheckPK implements Serializable {
 	@Column(name = "DATA_ENSAIO_ENTRADA")
 	public LocalDate checkDateIn;
 	
+	public ConverterActivitiesCheckPK() {
+	}
+	
 	public ConverterActivitiesCheckPK(String converterCode, String converterCheckTypeCode, LocalDate checkDateIn) {
 		this.converterCode = converterCode;
 		this.converterCheckTypeCode = converterCheckTypeCode;

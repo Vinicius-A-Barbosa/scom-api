@@ -27,6 +27,9 @@ public class EngineActivitiesCheckPK implements Serializable {
 	@Column(name = "DATA_ENSAIO_ENTRADA")
 	public LocalDate checkDateIn;
 	
+	public EngineActivitiesCheckPK() {
+	}
+	
 	public EngineActivitiesCheckPK(String engineCode, String engineCheckTypeCode, LocalDate checkDateIn) {
 		this.engineCode = engineCode;
 		this.engineCheckTypeCode = engineCheckTypeCode;

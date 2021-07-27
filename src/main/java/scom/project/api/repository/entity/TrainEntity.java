@@ -29,4 +29,7 @@ public class TrainEntity implements Serializable {
 	
 	@Column(name = "SERIE_TREM")
 	private String trainSerie;
+	
+	public TrainEntity() {
+	}
 }

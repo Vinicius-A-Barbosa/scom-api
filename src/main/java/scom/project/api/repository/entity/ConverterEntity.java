@@ -29,4 +29,7 @@ public class ConverterEntity implements Serializable  {
 	
 	@Column(name = "SERIE_CONVERSOR")
 	private String converterSerie;
+	
+	public ConverterEntity() {
+	}
 }

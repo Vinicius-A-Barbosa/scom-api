@@ -24,6 +24,9 @@ public class AxleActivitiesLubricationPK implements Serializable {
 	@Column(name = "DATA_LUBRIFICACAO_EIXO")
 	public LocalDate axcelDateLubrication;
 	
+	public AxleActivitiesLubricationPK() {
+	}
+	
 	public AxleActivitiesLubricationPK(String axleCode, LocalDate axcelDateLubrication) {
 		this.axleCode = axleCode;
 		this.axcelDateLubrication = axcelDateLubrication;

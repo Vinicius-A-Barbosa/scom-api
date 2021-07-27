@@ -197,6 +197,10 @@ public class EngineActivitiesCheckEntity implements Serializable {
 	@Column(name = "OBSERVACAO")
 	private String observation;
 	
+	public EngineActivitiesCheckEntity() {
+		this.engineActivitiesCheckPK = new EngineActivitiesCheckPK();
+	}
+	
 	public void setEngineActivitiesCheckPK
 	(
 		String engineCode, 

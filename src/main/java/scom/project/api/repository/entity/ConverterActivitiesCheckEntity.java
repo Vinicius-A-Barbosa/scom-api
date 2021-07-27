@@ -256,6 +256,9 @@ public class ConverterActivitiesCheckEntity implements Serializable {
 	@Column(name = "OBSERVACAO")
 	private String observation;
 
+	public ConverterActivitiesCheckEntity() {
+		this.converterActivitiesCheckPK = new ConverterActivitiesCheckPK();
+	}
 	
 	public void ConverterActivitiesCheckPK
 	(

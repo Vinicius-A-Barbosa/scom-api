@@ -65,6 +65,10 @@ public class WheelActivitiesMachiningEntity implements Serializable {
 	@Column(name = "DESGASTE_FRISO_NO_TEMPO")
 	private double wearFlangeInTime;
 	
+	public WheelActivitiesMachiningEntity() {
+		this.wheelActivitiesMachiningPK = new WheelActivitiesMachiningPK();
+	}
+	
 	public void setWheelActivitiesMachiningPK
 	(
 		String wheelCode, 

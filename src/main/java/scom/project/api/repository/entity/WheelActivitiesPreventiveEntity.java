@@ -63,4 +63,7 @@ public class WheelActivitiesPreventiveEntity implements Serializable {
 	
 	@Column(name = "SUPERFICIE_ROLAMENTO")
 	private String bearingSurface;
+	
+	public WheelActivitiesPreventiveEntity() {
+	}
 }

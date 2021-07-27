@@ -55,6 +55,10 @@ public class BogieShiftEntity implements Serializable {
 	@Column(name = "KM_ACUMULADO_TRUQUE")
 	private Integer bogieKmAccumulated;
 	
+	public BogieShiftEntity() {
+		this.bogieShiftPK = new BogieShiftPK();
+	}
+	
 	public void setBogieShiftPK(String trainCode, String wagonPositionsDescription, String bogiePositionsDescription, LocalDate bogieDateIn) {
 		this.bogieShiftPK = new BogieShiftPK(trainCode, wagonPositionsDescription, bogiePositionsDescription, bogieDateIn);
 	}

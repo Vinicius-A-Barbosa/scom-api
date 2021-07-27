@@ -71,6 +71,10 @@ public class ConverterActivitiesMaintenanceEntity implements Serializable {
 
 	@Column(name = "HORIMETRO")
 	private double hourmeter;
+	
+	public ConverterActivitiesMaintenanceEntity() {
+		this.converterActivitiesMaintenancePK = new ConverterActivitiesMaintenancePK();
+	}
 
 	public void setConverterActivitiesMaintenancePK
 	(

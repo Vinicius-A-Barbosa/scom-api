@@ -40,6 +40,10 @@ public class AxleActivitiesLubricationEntity implements Serializable {
 	@Column(name = "KM_DESDE_ULTIMA_LUBRIFICACAO_EIXO")
 	private Integer axcelKmSinceLastLubrication;
 	
+	public AxleActivitiesLubricationEntity() {
+		this.axleActivitiesLubricationPK = new AxleActivitiesLubricationPK();
+	}
+	
 	public void setAxleActivitiesLubricationPK
 	(
 		String axleCode,

@@ -28,6 +28,10 @@ public class WheelKilometersEntity implements Serializable {
 	@Column(name = "KM_RODA")
 	private Integer wheelKm;
 	
+	public WheelKilometersEntity() {
+		this.wheelKilometersPK = new WheelKilometersPK();
+	}
+	
 	public void setWheelKilometersPK(String wheelCode, LocalDate wheelDateKm) {
 		this.wheelKilometersPK = new WheelKilometersPK(wheelCode, wheelDateKm);
 	}

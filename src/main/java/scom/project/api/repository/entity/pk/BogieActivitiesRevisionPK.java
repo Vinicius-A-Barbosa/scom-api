@@ -24,6 +24,9 @@ public class BogieActivitiesRevisionPK implements Serializable {
 	@Column(name = "DATA_REVISAO_TRUQUE")
 	public LocalDate bogieDateRevision;
 	
+	public BogieActivitiesRevisionPK() {
+	}
+	
 	public BogieActivitiesRevisionPK(String bogieCode, LocalDate bogieDateRevision) {
 		this.bogieCode = bogieCode;
 		this.bogieDateRevision = bogieDateRevision;

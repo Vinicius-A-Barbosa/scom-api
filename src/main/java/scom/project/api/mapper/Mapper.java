@@ -18,11 +18,11 @@ public class Mapper {
 	}
 	
 	public static <T, S> List<T> convertListEntityWithPKToListDTO(List<S> sourceList, Class<T> targetClass, String pkField) {
-		List<T> destityList = new ArrayList<>();
+		List<T> destinyList = new ArrayList<>();
 		
 		try {
 			for (S source : sourceList) {
-				T destity = targetClass.getConstructor().newInstance();
+				T destiny = targetClass.getConstructor().newInstance();
 				for (Field fieldSource : source.getClass().getDeclaredFields()) {
 					fieldSource.setAccessible(true);
 					
@@ -31,31 +31,72 @@ public class Mapper {
 					if (fieldSource.getName() == pkField) {
 						for (Field innerField : fieldValue.getClass().getDeclaredFields()) {
 							innerField.setAccessible(true);
-							boolean doesFieldsHaveTheName = checkIfFieldNameExists(destity.getClass().getDeclaredFields(), innerField.getName());
+							boolean doesFieldsHaveTheName = checkIfFieldNameExists(destiny.getClass().getDeclaredFields(), innerField.getName());
 							if (doesFieldsHaveTheName) {
 								Object innerFieldValue = innerField.get(fieldValue);
 								
-								Field fieldDestiny = destity.getClass().getDeclaredField(innerField.getName());
+								Field fieldDestiny = destiny.getClass().getDeclaredField(innerField.getName());
 								fieldDestiny.setAccessible(true);
-								fieldDestiny.set(destity, innerFieldValue);
+								fieldDestiny.set(destiny, innerFieldValue);
 							}
 						}
 					} else {
-						boolean doesFieldsHaveTheName = checkIfFieldNameExists(destity.getClass().getDeclaredFields(), fieldSource.getName());
+						boolean doesFieldsHaveTheName = checkIfFieldNameExists(destiny.getClass().getDeclaredFields(), fieldSource.getName());
 						if (doesFieldsHaveTheName) {
-							Field fieldDestiny = destity.getClass().getDeclaredField(fieldSource.getName());
+							Field fieldDestiny = destiny.getClass().getDeclaredField(fieldSource.getName());
 							fieldDestiny.setAccessible(true);
-							fieldDestiny.set(destity, fieldValue);
+							fieldDestiny.set(destiny, fieldValue);
 						}
 					}
 				}
-				destityList.add(destity);
+				destinyList.add(destiny);
 			}
 		} catch(Exception e) {
 			System.out.print("Conversão falhou");
 		}
 		
-		return destityList;
+		return destinyList;
+	}
+	
+	public static <T, S> List<T> convertListDTOToListEntityWithPK(List<S> sourceList, Class<T> targetClass, String pkField) {
+		List<T> destinyList = new ArrayList<>();
+		
+		try {
+			for (S source : sourceList) {
+				T destiny = targetClass.getConstructor().newInstance();
+				for (Field fieldDestiny : destiny.getClass().getDeclaredFields()) {
+					fieldDestiny.setAccessible(true);
+					
+					if (fieldDestiny.getName() == pkField) {
+						Object destinyValue = fieldDestiny.get(destiny);
+						for (Field innerFieldDestiny : destinyValue.getClass().getDeclaredFields()) {
+							boolean doesFieldsHaveTheName = checkIfFieldNameExists(source.getClass().getDeclaredFields(), innerFieldDestiny.getName());
+							if (doesFieldsHaveTheName) {
+								innerFieldDestiny.setAccessible(true);
+								Field sourceField = source.getClass().getDeclaredField(innerFieldDestiny.getName());
+								sourceField.setAccessible(true);
+								Object sourceValue = sourceField.get(source);
+								innerFieldDestiny.set(destinyValue, sourceValue);
+							}
+						}
+						fieldDestiny.set(destiny, destinyValue);
+					} else {
+						boolean doesFieldsHaveTheName = checkIfFieldNameExists(source.getClass().getDeclaredFields(), fieldDestiny.getName());
+						if (doesFieldsHaveTheName) {
+							Field sourceField = source.getClass().getDeclaredField(fieldDestiny.getName());
+							sourceField.setAccessible(true);
+							Object sourceValue = sourceField.get(source);
+							fieldDestiny.set(destiny, sourceValue);
+						}
+					}
+				}
+				destinyList.add(destiny);
+			}
+		} catch(Exception e) {
+			System.out.print("Conversão falhou");
+		}
+		
+		return destinyList;
 	}
 	
 	private static boolean checkIfFieldNameExists(Field[] fields, String name) {

@@ -32,4 +32,7 @@ public class BogieEntity implements Serializable {
 	
 	@Column(name = "SERIE_TRUQUE")
 	private String bogieSerie;
+	
+	public BogieEntity() {
+	}
 }

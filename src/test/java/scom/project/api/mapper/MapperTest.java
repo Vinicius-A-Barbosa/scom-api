@@ -15,7 +15,7 @@ public class MapperTest {
 	@Test
 	public void testConvertingWithPK() {
 		
-		List<AxleKilometersEntity> axleKilometersEntityList = new ArrayList<>();
+		List<AxleKilometersEntity> expectedEntity = new ArrayList<>();
 		AxleKilometersEntity axleKilometersEntity1 = new AxleKilometersEntity();
 		axleKilometersEntity1.setAxleKilometersPK("A", LocalDate.of(2020, 7, 3));
 		axleKilometersEntity1.setAxleKm(3);
@@ -23,10 +23,10 @@ public class MapperTest {
 		axleKilometersEntity2.setAxleKilometersPK("B", LocalDate.of(2020, 8, 5));
 		axleKilometersEntity2.setAxleKm(5);
 		
-		axleKilometersEntityList.add(axleKilometersEntity1);
-		axleKilometersEntityList.add(axleKilometersEntity2);
+		expectedEntity.add(axleKilometersEntity1);
+		expectedEntity.add(axleKilometersEntity2);
 		
-		List<AxleKilometersDTO> expected = new ArrayList<>();
+		List<AxleKilometersDTO> expectedDTO = new ArrayList<>();
 		AxleKilometersDTO axleKilometersDTO1 = new AxleKilometersDTO();
 		axleKilometersDTO1.setAxleCode("A");
 		axleKilometersDTO1.setAxleDateKm(LocalDate.of(2020, 7, 3));
@@ -36,11 +36,15 @@ public class MapperTest {
 		axleKilometersDTO2.setAxleDateKm(LocalDate.of(2020, 8, 5));
 		axleKilometersDTO2.setAxleKm(5);
 		
-		expected.add(axleKilometersDTO1);
-		expected.add(axleKilometersDTO2);
+		expectedDTO.add(axleKilometersDTO1);
+		expectedDTO.add(axleKilometersDTO2);
 		
-		List<AxleKilometersDTO> result = new ArrayList<>();
-		result = Mapper.convertListEntityWithPKToListDTO(axleKilometersEntityList, AxleKilometersDTO.class, "axleKilometersPK");
-		Assert.assertEquals(expected, result);
+		List<AxleKilometersDTO> resultDTO = new ArrayList<>();
+		resultDTO = Mapper.convertListEntityWithPKToListDTO(expectedEntity, AxleKilometersDTO.class, "axleKilometersPK");
+		Assert.assertEquals(expectedDTO, resultDTO);
+		
+		List<AxleKilometersEntity> resultEntity = new ArrayList<>();
+		resultEntity = Mapper.convertListDTOToListEntityWithPK(expectedDTO, AxleKilometersEntity.class, "axleKilometersPK");
+		Assert.assertEquals(expectedEntity, resultEntity);
 	}
 }

@@ -29,4 +29,7 @@ public class WheelEntity implements Serializable {
 	
 	@Column(name = "SERIE_RODA")
 	private String wheelSerie;
+	
+	public WheelEntity() {
+	}
 }

@@ -55,6 +55,10 @@ public class ConverterShiftEntity implements Serializable {
 	@Column(name = "KM_ACUMULADO_CONVERSOR")
 	private Integer converterKmAccumulated;
 	
+	public ConverterShiftEntity() {
+		this.converterShiftPK = new ConverterShiftPK();
+	}
+	
 	public void setConverterShiftPK(String trainCode, String wagonPositionsDescription, String converterCode, LocalDate converterDateIn) {
 		this.converterShiftPK = new ConverterShiftPK(trainCode, wagonPositionsDescription, converterCode, converterDateIn);
 	}

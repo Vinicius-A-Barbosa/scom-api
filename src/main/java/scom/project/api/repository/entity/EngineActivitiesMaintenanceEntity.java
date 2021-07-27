@@ -81,6 +81,10 @@ public class EngineActivitiesMaintenanceEntity implements Serializable {
 	@Column(name = "COMENTARIO")
 	private String comments;
 	
+	public EngineActivitiesMaintenanceEntity() {
+		this.engineActivitiesMaintenancePK = new EngineActivitiesMaintenancePK();
+	}
+	
 	public void setEngineActivitiesMaintenancePK
 	(
 		String engineCode, LocalDate engineDateMaintenance,

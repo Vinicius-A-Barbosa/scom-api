@@ -28,6 +28,10 @@ public class BogieKilometersEntity implements Serializable {
 	@Column(name = "KM_TRUQUE")
 	private Integer bogieKm;
 	
+	public BogieKilometersEntity() {
+		this.bogieKilometersPK = new BogieKilometersPK();
+	}
+	
 	public void setBogieKilometersPK(String bogieCode, LocalDate bogieDateKm) {
 		this.bogieKilometersPK = new BogieKilometersPK(bogieCode, bogieDateKm);
 	}

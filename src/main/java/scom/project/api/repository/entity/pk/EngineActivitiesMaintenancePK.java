@@ -48,6 +48,9 @@ public class EngineActivitiesMaintenancePK implements Serializable {
 	@Column(name = "COMPRIMENTO_ESCOVA4_EXTERNA")
 	public double lengthBrushFourOutside;
 	
+	public EngineActivitiesMaintenancePK() {
+	}
+	
 	public EngineActivitiesMaintenancePK
 	(
 		String engineCode, LocalDate engineDateMaintenance,

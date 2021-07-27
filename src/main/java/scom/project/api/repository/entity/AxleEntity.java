@@ -32,4 +32,7 @@ public class AxleEntity implements Serializable {
 	
 	@Column(name = "SERIE_EIXO")
 	private String axleSerie;
+	
+	public AxleEntity() {
+	}
 }

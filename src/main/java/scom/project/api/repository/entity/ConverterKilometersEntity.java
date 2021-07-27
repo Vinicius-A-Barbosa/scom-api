@@ -28,6 +28,10 @@ public class ConverterKilometersEntity implements Serializable {
 	@Column(name = "KM_CONVERSOR")
 	private Integer converterKm;
 	
+	public ConverterKilometersEntity() {
+		this.converterKilometersPK = new ConverterKilometersPK();
+	}
+	
 	public void setConverterKilometersPK(String converterCode, LocalDate converterDateKm) {
 		this.converterKilometersPK = new ConverterKilometersPK(converterCode, converterDateKm);
 	}

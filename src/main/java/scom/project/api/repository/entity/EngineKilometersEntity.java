@@ -28,6 +28,10 @@ public class EngineKilometersEntity implements Serializable {
 	@Column(name = "KM_MOTOR")
 	private Integer engineKm;
 	
+	public EngineKilometersEntity() {
+		this.engineKilometersPK = new EngineKilometersPK();
+	}
+	
 	public void setEngineKilometersPK(String engineCode, LocalDate engineDateKm) {
 		this.engineKilometersPK = new EngineKilometersPK(engineCode, engineDateKm);
 	}

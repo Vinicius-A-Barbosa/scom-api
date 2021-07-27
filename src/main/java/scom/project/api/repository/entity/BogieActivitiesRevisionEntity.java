@@ -22,7 +22,7 @@ import scom.project.api.repository.entity.pk.BogieActivitiesRevisionPK;
 @Entity
 @EqualsAndHashCode
 @Table(name = "ATIVIDADES_REVISAO_TRUQUE")
-public class BogieActivitiesRevisionEntity implements Serializable {
+public class BogieActivitiesRevisionEntity  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -41,6 +41,10 @@ public class BogieActivitiesRevisionEntity implements Serializable {
 	
 	@Column(name = "KM_DESDE_ULTIMA_REVISAO_TRUQUE")
 	private Integer sinceLastRevisionKm;
+	
+	public BogieActivitiesRevisionEntity() {
+		this.bogieActivitiesRevisionPK = new BogieActivitiesRevisionPK();
+	}
 	
 	public void setBogieActivitiesRevisionPK
 	(

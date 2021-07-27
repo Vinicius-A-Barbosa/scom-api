@@ -24,6 +24,9 @@ public class WheelActivitiesMachiningPK implements Serializable {
 	@Column(name = "DATA_USINAGEM_RODA")
 	public LocalDate wheelDateMachining;
 	
+	public WheelActivitiesMachiningPK() {
+	}
+	
 	public WheelActivitiesMachiningPK(String wheelCode, LocalDate wheelDateMachining) {
 		this.wheelCode = wheelCode;
 		this.wheelDateMachining = wheelDateMachining;

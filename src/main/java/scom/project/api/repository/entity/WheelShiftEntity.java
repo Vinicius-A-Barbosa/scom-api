@@ -52,6 +52,10 @@ public class WheelShiftEntity implements Serializable {
 	@Column(name = "KM_ACUMULADO_RODA")
 	private Integer wheelKmAccumulated;
 	
+	public WheelShiftEntity() {
+		this.wheelShiftPK = new WheelShiftPK();
+	}
+	
 	public void setWheelShiftPK(String axleCode, String wheelPositionsCode, String wheelCode, LocalDate wheelDateIn) {
 		this.wheelShiftPK = new WheelShiftPK(axleCode, wheelPositionsCode, wheelCode, wheelDateIn);
 	}

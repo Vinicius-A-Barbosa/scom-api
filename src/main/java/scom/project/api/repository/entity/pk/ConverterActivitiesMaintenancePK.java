@@ -36,6 +36,9 @@ public class ConverterActivitiesMaintenancePK implements Serializable {
 	@Column(name = "COMPRIMENTO_ESCOVA_ESQUERDA_EXTERNA")
 	public double lengthBrushLeftOutside;
 	
+	public ConverterActivitiesMaintenancePK() {
+	}
+	
 	public ConverterActivitiesMaintenancePK
 	(
 		String converterCode, LocalDate converterDateMaintenance, 

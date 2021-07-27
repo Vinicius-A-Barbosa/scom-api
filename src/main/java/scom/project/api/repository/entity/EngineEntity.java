@@ -29,4 +29,7 @@ public class EngineEntity implements Serializable {
 	
 	@Column(name = "SERIE_MOTOR")
 	private String engineSerie;
+	
+	public EngineEntity() {
+	}
 }

@@ -52,6 +52,9 @@ public class AxleShiftEntity implements Serializable {
 	@Column(name = "KM_ACUMULADO_EIXO")
 	private Integer axleKmAccumulated;
 	
+	public AxleShiftEntity() {
+	}
+	
 	public void setAxleShiftPK(String bogieCode, String axlePositionsDescription, String axleCode, LocalDate axleDateIn) {
 		this.axleShiftPK = new AxleShiftPK(bogieCode, axlePositionsDescription, axleCode, axleDateIn);
 	}
