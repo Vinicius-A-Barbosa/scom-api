@@ -12,11 +12,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import scom.project.api.repository.entity.pk.EngineShiftPK;
 
 @Entity
+@EqualsAndHashCode
 @Getter
 @Setter
 @Table(name = "MOVIMENTACOES_MOTOR")
@@ -52,6 +54,10 @@ public class EngineShiftEntity implements Serializable {
 	
 	@Column(name = "KM_ACUMULADO_MOTOR")
 	private Integer engineKmAccumulated;
+	
+	public EngineShiftEntity() {
+		this.engineShiftPK = new EngineShiftPK();
+	}
 	
 	public void setEngineShiftPK(String bogieCode, String enginePositionsDescription, String engineCode, LocalDate engineDateIn) {
 		this.engineShiftPK = new EngineShiftPK(bogieCode, enginePositionsDescription, engineCode, engineDateIn);

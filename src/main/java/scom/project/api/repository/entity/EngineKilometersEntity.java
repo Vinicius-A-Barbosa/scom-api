@@ -8,11 +8,13 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import scom.project.api.repository.entity.pk.EngineKilometersPK;
 
 @Entity
+@EqualsAndHashCode
 @Getter
 @Setter
 @Table(name = "QUILOMETRAGEM_MOTOR")
@@ -25,6 +27,10 @@ public class EngineKilometersEntity implements Serializable {
 	
 	@Column(name = "KM_MOTOR")
 	private Integer engineKm;
+	
+	public EngineKilometersEntity() {
+		this.engineKilometersPK = new EngineKilometersPK();
+	}
 	
 	public void setEngineKilometersPK(String engineCode, LocalDate engineDateKm) {
 		this.engineKilometersPK = new EngineKilometersPK(engineCode, engineDateKm);

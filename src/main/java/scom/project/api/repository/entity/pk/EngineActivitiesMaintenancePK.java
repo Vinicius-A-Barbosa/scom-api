@@ -6,12 +6,14 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Embeddable
+@EqualsAndHashCode
 public class EngineActivitiesMaintenancePK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -45,6 +47,9 @@ public class EngineActivitiesMaintenancePK implements Serializable {
 	
 	@Column(name = "COMPRIMENTO_ESCOVA4_EXTERNA")
 	public double lengthBrushFourOutside;
+	
+	public EngineActivitiesMaintenancePK() {
+	}
 	
 	public EngineActivitiesMaintenancePK
 	(

@@ -11,11 +11,13 @@ import javax.persistence.JoinColumns;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import scom.project.api.repository.entity.pk.AxleShiftPK;
 
 @Entity
+@EqualsAndHashCode
 @Getter
 @Setter
 @Table(name = "MOVIMENTACOES_EIXO")
@@ -49,6 +51,9 @@ public class AxleShiftEntity implements Serializable {
 	
 	@Column(name = "KM_ACUMULADO_EIXO")
 	private Integer axleKmAccumulated;
+	
+	public AxleShiftEntity() {
+	}
 	
 	public void setAxleShiftPK(String bogieCode, String axlePositionsDescription, String axleCode, LocalDate axleDateIn) {
 		this.axleShiftPK = new AxleShiftPK(bogieCode, axlePositionsDescription, axleCode, axleDateIn);

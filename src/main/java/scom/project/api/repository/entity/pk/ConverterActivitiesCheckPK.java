@@ -6,12 +6,14 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Embeddable
+@EqualsAndHashCode
 public class ConverterActivitiesCheckPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,6 +24,9 @@ public class ConverterActivitiesCheckPK implements Serializable {
 	public String converterCheckTypeCode;
 	@Column(name = "DATA_ENSAIO_ENTRADA")
 	public LocalDate checkDateIn;
+	
+	public ConverterActivitiesCheckPK() {
+	}
 	
 	public ConverterActivitiesCheckPK(String converterCode, String converterCheckTypeCode, LocalDate checkDateIn) {
 		this.converterCode = converterCode;

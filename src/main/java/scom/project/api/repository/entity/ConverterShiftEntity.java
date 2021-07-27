@@ -12,11 +12,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import scom.project.api.repository.entity.pk.ConverterShiftPK;
 
 @Entity
+@EqualsAndHashCode
 @Getter
 @Setter
 @Table(name = "MOVIMENTACOES_CONVERSOR")
@@ -52,6 +54,10 @@ public class ConverterShiftEntity implements Serializable {
 	
 	@Column(name = "KM_ACUMULADO_CONVERSOR")
 	private Integer converterKmAccumulated;
+	
+	public ConverterShiftEntity() {
+		this.converterShiftPK = new ConverterShiftPK();
+	}
 	
 	public void setConverterShiftPK(String trainCode, String wagonPositionsDescription, String converterCode, LocalDate converterDateIn) {
 		this.converterShiftPK = new ConverterShiftPK(trainCode, wagonPositionsDescription, converterCode, converterDateIn);

@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import scom.project.api.repository.entity.pk.ConverterActivitiesCheckPK;
@@ -19,6 +20,7 @@ import scom.project.api.repository.entity.pk.ConverterActivitiesCheckPK;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode
 @Table(name = "ATIVIDADES_ENSAIOS_CONVERSOR")
 public class ConverterActivitiesCheckEntity implements Serializable {
 
@@ -254,6 +256,9 @@ public class ConverterActivitiesCheckEntity implements Serializable {
 	@Column(name = "OBSERVACAO")
 	private String observation;
 
+	public ConverterActivitiesCheckEntity() {
+		this.converterActivitiesCheckPK = new ConverterActivitiesCheckPK();
+	}
 	
 	public void ConverterActivitiesCheckPK
 	(

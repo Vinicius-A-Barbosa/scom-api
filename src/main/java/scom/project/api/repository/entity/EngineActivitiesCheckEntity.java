@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import scom.project.api.repository.entity.pk.EngineActivitiesCheckPK;
@@ -19,6 +20,7 @@ import scom.project.api.repository.entity.pk.EngineActivitiesCheckPK;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode
 @Table(name = "ATIVIDADES_ENSAIOS_MOTOR")
 public class EngineActivitiesCheckEntity implements Serializable {
 
@@ -194,6 +196,10 @@ public class EngineActivitiesCheckEntity implements Serializable {
 	
 	@Column(name = "OBSERVACAO")
 	private String observation;
+	
+	public EngineActivitiesCheckEntity() {
+		this.engineActivitiesCheckPK = new EngineActivitiesCheckPK();
+	}
 	
 	public void setEngineActivitiesCheckPK
 	(

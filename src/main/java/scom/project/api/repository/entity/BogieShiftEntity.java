@@ -12,11 +12,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import scom.project.api.repository.entity.pk.BogieShiftPK;
 
 @Entity
+@EqualsAndHashCode
 @Getter
 @Setter
 @Table(name = "MOVIMENTACOES_TRUQUE")
@@ -52,6 +54,10 @@ public class BogieShiftEntity implements Serializable {
 	
 	@Column(name = "KM_ACUMULADO_TRUQUE")
 	private Integer bogieKmAccumulated;
+	
+	public BogieShiftEntity() {
+		this.bogieShiftPK = new BogieShiftPK();
+	}
 	
 	public void setBogieShiftPK(String trainCode, String wagonPositionsDescription, String bogiePositionsDescription, LocalDate bogieDateIn) {
 		this.bogieShiftPK = new BogieShiftPK(trainCode, wagonPositionsDescription, bogiePositionsDescription, bogieDateIn);

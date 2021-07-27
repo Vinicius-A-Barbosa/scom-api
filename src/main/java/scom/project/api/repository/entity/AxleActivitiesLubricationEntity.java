@@ -11,6 +11,7 @@ import javax.persistence.JoinColumns;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import scom.project.api.repository.entity.pk.AxleActivitiesLubricationPK;
@@ -18,6 +19,7 @@ import scom.project.api.repository.entity.pk.AxleActivitiesLubricationPK;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode
 @Table(name = "ATIVIDADES_LUBRIFICACAO_EIXO")
 public class AxleActivitiesLubricationEntity implements Serializable {
 
@@ -37,6 +39,10 @@ public class AxleActivitiesLubricationEntity implements Serializable {
 	
 	@Column(name = "KM_DESDE_ULTIMA_LUBRIFICACAO_EIXO")
 	private Integer axcelKmSinceLastLubrication;
+	
+	public AxleActivitiesLubricationEntity() {
+		this.axleActivitiesLubricationPK = new AxleActivitiesLubricationPK();
+	}
 	
 	public void setAxleActivitiesLubricationPK
 	(

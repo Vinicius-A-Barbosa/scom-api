@@ -11,11 +11,13 @@ import javax.persistence.JoinColumns;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import scom.project.api.repository.entity.pk.WheelShiftPK;
 
 @Entity
+@EqualsAndHashCode
 @Getter
 @Setter
 @Table(name = "MOVIMENTACOES_RODA")
@@ -49,6 +51,10 @@ public class WheelShiftEntity implements Serializable {
 	
 	@Column(name = "KM_ACUMULADO_RODA")
 	private Integer wheelKmAccumulated;
+	
+	public WheelShiftEntity() {
+		this.wheelShiftPK = new WheelShiftPK();
+	}
 	
 	public void setWheelShiftPK(String axleCode, String wheelPositionsCode, String wheelCode, LocalDate wheelDateIn) {
 		this.wheelShiftPK = new WheelShiftPK(axleCode, wheelPositionsCode, wheelCode, wheelDateIn);

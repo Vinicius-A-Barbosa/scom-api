@@ -11,6 +11,7 @@ import javax.persistence.JoinColumns;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import scom.project.api.repository.entity.pk.WheelActivitiesMachiningPK;
@@ -18,6 +19,7 @@ import scom.project.api.repository.entity.pk.WheelActivitiesMachiningPK;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode
 @Table(name = "ATIVIDADES_USINAGEM_RODA")
 public class WheelActivitiesMachiningEntity implements Serializable {
 
@@ -62,6 +64,10 @@ public class WheelActivitiesMachiningEntity implements Serializable {
 	
 	@Column(name = "DESGASTE_FRISO_NO_TEMPO")
 	private double wearFlangeInTime;
+	
+	public WheelActivitiesMachiningEntity() {
+		this.wheelActivitiesMachiningPK = new WheelActivitiesMachiningPK();
+	}
 	
 	public void setWheelActivitiesMachiningPK
 	(

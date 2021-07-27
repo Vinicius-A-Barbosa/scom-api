@@ -7,10 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@EqualsAndHashCode
 @Getter
 @Setter
 @Table(name = "EQUIPAMENTOS_TREM")
@@ -27,4 +29,7 @@ public class TrainEntity implements Serializable {
 	
 	@Column(name = "SERIE_TREM")
 	private String trainSerie;
+	
+	public TrainEntity() {
+	}
 }

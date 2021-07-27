@@ -6,12 +6,14 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Embeddable
+@EqualsAndHashCode
 public class WheelActivitiesMachiningPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -21,6 +23,9 @@ public class WheelActivitiesMachiningPK implements Serializable {
 	
 	@Column(name = "DATA_USINAGEM_RODA")
 	public LocalDate wheelDateMachining;
+	
+	public WheelActivitiesMachiningPK() {
+	}
 	
 	public WheelActivitiesMachiningPK(String wheelCode, LocalDate wheelDateMachining) {
 		this.wheelCode = wheelCode;

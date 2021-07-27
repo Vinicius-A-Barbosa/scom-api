@@ -7,10 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@EqualsAndHashCode
 @Getter
 @Setter
 @Table(name = "EQUIPAMENTOS_EIXO")
@@ -30,4 +32,7 @@ public class AxleEntity implements Serializable {
 	
 	@Column(name = "SERIE_EIXO")
 	private String axleSerie;
+	
+	public AxleEntity() {
+	}
 }

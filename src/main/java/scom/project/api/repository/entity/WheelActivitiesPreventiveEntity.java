@@ -11,12 +11,14 @@ import javax.persistence.JoinColumns;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode
 @Table(name = "ATIVIDADES_PREVENTIVA_RODA")
 public class WheelActivitiesPreventiveEntity implements Serializable {
 
@@ -61,4 +63,7 @@ public class WheelActivitiesPreventiveEntity implements Serializable {
 	
 	@Column(name = "SUPERFICIE_ROLAMENTO")
 	private String bearingSurface;
+	
+	public WheelActivitiesPreventiveEntity() {
+	}
 }

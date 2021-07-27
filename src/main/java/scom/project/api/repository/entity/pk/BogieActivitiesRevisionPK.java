@@ -6,12 +6,14 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Embeddable
+@EqualsAndHashCode
 public class BogieActivitiesRevisionPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -21,6 +23,9 @@ public class BogieActivitiesRevisionPK implements Serializable {
 	
 	@Column(name = "DATA_REVISAO_TRUQUE")
 	public LocalDate bogieDateRevision;
+	
+	public BogieActivitiesRevisionPK() {
+	}
 	
 	public BogieActivitiesRevisionPK(String bogieCode, LocalDate bogieDateRevision) {
 		this.bogieCode = bogieCode;
