@@ -14,34 +14,39 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import scom.project.api.dto.TrainDTO;
-import scom.project.api.service.TrainService;
+import scom.project.api.dto.TrainKilometersDTO;
+import scom.project.api.service.TrainKilometersService;
 
 @RestController
-@RequestMapping("train")
+@RequestMapping("train/kilometers")
 @CrossOrigin(origins = "*")
-public class TrainController {
+public class TrainKilometersController {
 	
 	private Gson gson = new Gson();
 	
 	@Autowired
-	private TrainService trainService;
+	private TrainKilometersService kilometersService;
 	
 	@GetMapping("/all")
-	public List<TrainDTO> getTrainList() {
-		return trainService.findAll();
+	public List<TrainKilometersDTO> getTrainList() {
+		return kilometersService.findAll();
+	}
+	
+	@GetMapping("/all/byTrain")
+	public List<TrainKilometersDTO> getAllByTrain(@RequestBody String body) {
+		return kilometersService.findAllByTrain(body);
 	}
 	
 	@PutMapping("/all")
 	public void saveTrainList(@RequestBody String body) {
-		Type trainDTOType = new TypeToken<List<TrainDTO>>() {
+		Type trainDTOType = new TypeToken<List<TrainKilometersDTO>>() {
 		}.getType();
 		
-		trainService.saveAll(gson.fromJson(body, trainDTOType));
+		kilometersService.saveAll(gson.fromJson(body, trainDTOType));
 	}
-	
+
 	@PutMapping("/one")
 	public void saveTrain(@RequestBody String body) {
-		trainService.saveOne(gson.fromJson(body, TrainDTO.class));
+		kilometersService.saveOne(gson.fromJson(body, TrainKilometersDTO.class));
 	}
 }

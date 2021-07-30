@@ -14,34 +14,39 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import scom.project.api.dto.EngineDTO;
-import scom.project.api.service.EngineService;
+import scom.project.api.dto.EngineKilometersDTO;
+import scom.project.api.service.EngineKilometersService;
 
 @RestController
-@RequestMapping("engine")
+@RequestMapping("engine/kilometers")
 @CrossOrigin(origins = "*")
-public class EngineController {
-	
-	private Gson gson = new Gson();
+public class EngineKilometersController {
 
+	private Gson gson = new Gson();
+	
 	@Autowired
-	private EngineService engineService;
+	private EngineKilometersService kilometersService;
 	
 	@GetMapping("/all")
-	public List<EngineDTO> getEngineList() {
-		return engineService.findAll();
+	public List<EngineKilometersDTO> getEngineList() {
+		return kilometersService.findAll();
+	}
+	
+	@GetMapping("/all/byEngine")
+	public List<EngineKilometersDTO> getAllByEngine(@RequestBody String body) {
+		return kilometersService.findAllByEngine(body);
 	}
 	
 	@PutMapping("/all")
 	public void saveEngineList(@RequestBody String body) {
-		Type engineDTOType = new TypeToken<List<EngineDTO>>() {
+		Type engineDTOType = new TypeToken<List<EngineKilometersDTO>>() {
 		}.getType();
 		
-		engineService.saveAll(gson.fromJson(body, engineDTOType));
+		kilometersService.saveAll(gson.fromJson(body, engineDTOType));
 	}
-	
+
 	@PutMapping("/one")
 	public void saveEngine(@RequestBody String body) {
-		engineService.saveOne(gson.fromJson(body, EngineDTO.class));
+		kilometersService.saveOne(gson.fromJson(body, EngineKilometersDTO.class));
 	}
 }

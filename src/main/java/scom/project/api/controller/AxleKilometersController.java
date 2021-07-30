@@ -14,34 +14,39 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import scom.project.api.dto.AxleDTO;
-import scom.project.api.service.AxleService;
+import scom.project.api.dto.AxleKilometersDTO;
+import scom.project.api.service.AxleKilometersService;
 
 @RestController
-@RequestMapping("axle")
+@RequestMapping("axle/kilometers")
 @CrossOrigin(origins = "*")
-public class AxleController {
-	
-	private Gson gson = new Gson();
+public class AxleKilometersController {
 
+	private Gson gson = new Gson();
+	
 	@Autowired
-	private AxleService axleService;
+	private AxleKilometersService kilometersService;
 	
 	@GetMapping("/all")
-	public List<AxleDTO> getAxleList() {
-		return axleService.findAll();
+	public List<AxleKilometersDTO> getAxleList() {
+		return kilometersService.findAll();
+	}
+	
+	@GetMapping("/all/byAxle")
+	public List<AxleKilometersDTO> getAllByAxle(@RequestBody String body) {
+		return kilometersService.findAllByAxle(body);
 	}
 	
 	@PutMapping("/all")
 	public void saveAxleList(@RequestBody String body) {
-		Type axleDTOType = new TypeToken<List<AxleDTO>>() {
+		Type axleDTOType = new TypeToken<List<AxleKilometersDTO>>() {
 		}.getType();
 		
-		axleService.saveAll(gson.fromJson(body, axleDTOType));
+		kilometersService.saveAll(gson.fromJson(body, axleDTOType));
 	}
-	
+
 	@PutMapping("/one")
 	public void saveAxle(@RequestBody String body) {
-		axleService.saveOne(gson.fromJson(body, AxleDTO.class));
+		kilometersService.saveOne(gson.fromJson(body, AxleKilometersDTO.class));
 	}
 }

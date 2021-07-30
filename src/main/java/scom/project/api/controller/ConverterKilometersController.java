@@ -14,34 +14,39 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import scom.project.api.dto.ConverterDTO;
-import scom.project.api.service.ConverterService;
+import scom.project.api.dto.ConverterKilometersDTO;
+import scom.project.api.service.ConverterKilometersService;
 
 @RestController
-@RequestMapping("converter")
+@RequestMapping("converter/kilometers")
 @CrossOrigin(origins = "*")
-public class ConverterController {
-	
+public class ConverterKilometersController {
+
 	private Gson gson = new Gson();
 	
 	@Autowired
-	private ConverterService converterService;
+	private ConverterKilometersService kilometersService;
 	
 	@GetMapping("/all")
-	public List<ConverterDTO> getConverterList() {
-		return converterService.findAll();
+	public List<ConverterKilometersDTO> getConverterList() {
+		return kilometersService.findAll();
+	}
+	
+	@GetMapping("/all/byConverter")
+	public List<ConverterKilometersDTO> getAllByConverter(@RequestBody String body) {
+		return kilometersService.findAllByConverter(body);
 	}
 	
 	@PutMapping("/all")
 	public void saveConverterList(@RequestBody String body) {
-		Type converterDTOType = new TypeToken<List<ConverterDTO>>() {
+		Type converterDTOType = new TypeToken<List<ConverterKilometersDTO>>() {
 		}.getType();
 		
-		converterService.saveAll(gson.fromJson(body, converterDTOType));
+		kilometersService.saveAll(gson.fromJson(body, converterDTOType));
 	}
-	
+
 	@PutMapping("/one")
 	public void saveConverter(@RequestBody String body) {
-		converterService.saveOne(gson.fromJson(body, ConverterDTO.class));
+		kilometersService.saveOne(gson.fromJson(body, ConverterKilometersDTO.class));
 	}
 }
