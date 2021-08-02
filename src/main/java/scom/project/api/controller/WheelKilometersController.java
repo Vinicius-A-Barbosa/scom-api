@@ -14,34 +14,39 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import scom.project.api.dto.WheelDTO;
-import scom.project.api.service.WheelService;
+import scom.project.api.dto.WheelKilometersDTO;
+import scom.project.api.service.WheelKilometersService;
 
 @RestController
-@RequestMapping("wheel")
+@RequestMapping("wheel/kilometers")
 @CrossOrigin(origins = "*")
-public class WheelController {
-	
-	private Gson gson = new Gson();
+public class WheelKilometersController {
 
+	private Gson gson = new Gson();
+	
 	@Autowired
-	private WheelService wheelService;
+	private WheelKilometersService kilometersService;
 	
 	@GetMapping("/all")
-	public List<WheelDTO> getWheelList() {
-		return wheelService.findAll();
+	public List<WheelKilometersDTO> getWheelList() {
+		return kilometersService.findAll();
+	}
+	
+	@GetMapping("/all/byWheel")
+	public List<WheelKilometersDTO> getAllByWheel(@RequestBody String body) {
+		return kilometersService.findAllByWheel(body);
 	}
 	
 	@PutMapping("/all")
 	public void saveWheelList(@RequestBody String body) {
-		Type wheelDTOType = new TypeToken<List<WheelDTO>>() {
+		Type wheelDTOType = new TypeToken<List<WheelKilometersDTO>>() {
 		}.getType();
 		
-		wheelService.saveAll(gson.fromJson(body, wheelDTOType));
+		kilometersService.saveAll(gson.fromJson(body, wheelDTOType));
 	}
-	
+
 	@PutMapping("/one")
 	public void saveWheel(@RequestBody String body) {
-		wheelService.saveOne(gson.fromJson(body, WheelDTO.class));
+		kilometersService.saveOne(gson.fromJson(body, WheelKilometersDTO.class));
 	}
 }

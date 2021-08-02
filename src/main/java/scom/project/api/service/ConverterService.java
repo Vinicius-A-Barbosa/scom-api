@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import scom.project.api.dto.ConverterDTO;
 import scom.project.api.mapper.Mapper;
 import scom.project.api.repository.ConverterRepository;
+import scom.project.api.repository.entity.ConverterEntity;
 
 @Service
 public class ConverterService {
@@ -16,6 +17,14 @@ public class ConverterService {
 	private ConverterRepository converterRepository;
 	
 	public List<ConverterDTO> findAll() {
-		return Mapper.convertListEntityToListDTO(converterRepository.findAll(), ConverterDTO.class);
+		return Mapper.convertListSourceToListDestination(converterRepository.findAll(), ConverterDTO.class);
+	}
+	
+	public void saveAll(List<ConverterDTO> converterDTOList) {
+		converterRepository.saveAll(Mapper.convertListSourceToListDestination(converterDTOList, ConverterEntity.class));
+	}
+	
+	public void saveOne(ConverterDTO converterDTO) {
+		converterRepository.save(Mapper.convertSourceToDestination(converterDTO, ConverterEntity.class));
 	}
 }

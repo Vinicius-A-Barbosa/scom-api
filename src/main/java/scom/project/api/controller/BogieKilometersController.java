@@ -14,34 +14,39 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import scom.project.api.dto.BogieDTO;
-import scom.project.api.service.BogieService;
+import scom.project.api.dto.BogieKilometersDTO;
+import scom.project.api.service.BogieKilometersService;
 
 @RestController
-@RequestMapping("bogie")
+@RequestMapping("bogie/kilometers")
 @CrossOrigin(origins = "*")
-public class BogieController {
-	
-	private Gson gson = new Gson();
+public class BogieKilometersController {
 
+	private Gson gson = new Gson();
+	
 	@Autowired
-	private BogieService bogieService;
+	private BogieKilometersService kilometersService;
 	
 	@GetMapping("/all")
-	public List<BogieDTO> getBogieList() {
-		return bogieService.findAll();
+	public List<BogieKilometersDTO> getBogieList() {
+		return kilometersService.findAll();
+	}
+	
+	@GetMapping("/all/byBogie")
+	public List<BogieKilometersDTO> getAllByBogie(@RequestBody String body) {
+		return kilometersService.findAllByBogie(body);
 	}
 	
 	@PutMapping("/all")
 	public void saveBogieList(@RequestBody String body) {
-		Type bogieDTOType = new TypeToken<List<BogieDTO>>() {
+		Type bogieDTOType = new TypeToken<List<BogieKilometersDTO>>() {
 		}.getType();
 		
-		bogieService.saveAll(gson.fromJson(body, bogieDTOType));
+		kilometersService.saveAll(gson.fromJson(body, bogieDTOType));
 	}
-	
+
 	@PutMapping("/one")
 	public void saveBogie(@RequestBody String body) {
-		bogieService.saveOne(gson.fromJson(body, BogieDTO.class));
+		kilometersService.saveOne(gson.fromJson(body, BogieKilometersDTO.class));
 	}
 }

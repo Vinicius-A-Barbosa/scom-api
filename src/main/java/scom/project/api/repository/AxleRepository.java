@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import scom.project.api.repository.entity.AxleEntity;
 
 @Repository
-public interface AxleRepository extends CrudRepository<AxleEntity, String>{
+public interface AxleRepository extends CrudRepository<AxleEntity, String> {
 	List<AxleEntity> findAll();
 }
