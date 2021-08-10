@@ -8,7 +8,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,7 +30,7 @@ public class ConverterShiftEntity implements Serializable {
 	@EmbeddedId
 	private ConverterShiftPK converterShiftPK;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_CONVERSOR", referencedColumnName = "CODIGO_CONVERSOR", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_ENTRADA_CONVERSOR", referencedColumnName = "DATA_KM_CONVERSOR", insertable = false, updatable = false)
@@ -37,12 +38,12 @@ public class ConverterShiftEntity implements Serializable {
 	private ConverterKilometersEntity converterKilometersEntityIn;
 	
 	@Transient
-	private Integer converterKmIn = converterKilometersEntityIn.getConverterKm();
+	private Integer converterKmIn;
 	
 	@Column(name = "DATA_SAIDA_CONVERSOR")
 	private LocalDate converterDateOut;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_CONVERSOR", referencedColumnName = "CODIGO_CONVERSOR", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_SAIDA_CONVERSOR", referencedColumnName = "DATA_KM_CONVERSOR", insertable = false, updatable = false)
@@ -50,7 +51,7 @@ public class ConverterShiftEntity implements Serializable {
 	private ConverterKilometersEntity converterKilometersEntityOut;
 	
 	@Transient
-	private Integer converterKmOut = converterKilometersEntityOut.getConverterKm();
+	private Integer converterKmOut;
 	
 	@Column(name = "KM_ACUMULADO_CONVERSOR")
 	private Integer converterKmAccumulated;
@@ -61,5 +62,11 @@ public class ConverterShiftEntity implements Serializable {
 	
 	public void setConverterShiftPK(String trainCode, String wagonPositionsDescription, String converterCode, LocalDate converterDateIn) {
 		this.converterShiftPK = new ConverterShiftPK(trainCode, wagonPositionsDescription, converterCode, converterDateIn);
+	}
+	
+	@PostLoad
+	private void setKms() {
+		converterKmIn = converterKilometersEntityIn != null ? converterKilometersEntityIn.getConverterKm() : null;
+		converterKmOut = converterKilometersEntityOut != null ? converterKilometersEntityOut.getConverterKm() : null;
 	}
 }
