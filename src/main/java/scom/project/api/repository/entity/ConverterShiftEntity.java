@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -68,5 +69,22 @@ public class ConverterShiftEntity implements Serializable {
 	private void setKms() {
 		converterKmIn = converterKilometersEntityIn != null ? converterKilometersEntityIn.getConverterKm() : null;
 		converterKmOut = converterKilometersEntityOut != null ? converterKilometersEntityOut.getConverterKm() : null;
+	}
+	
+	@PrePersist
+	private void setKmEntities() {
+		converterKilometersEntityIn = new ConverterKilometersEntity();
+		converterKilometersEntityIn.getConverterKilometersPK()
+			.setConverterCode(converterShiftPK.getConverterCode());
+		converterKilometersEntityIn.getConverterKilometersPK()
+			.setConverterDateKm(converterShiftPK.getConverterDateIn());
+		converterKilometersEntityIn.setConverterKm(converterKmIn);
+		
+		converterKilometersEntityOut = new ConverterKilometersEntity();
+		converterKilometersEntityOut.getConverterKilometersPK()
+			.setConverterCode(converterShiftPK.getConverterCode());
+		converterKilometersEntityOut.getConverterKilometersPK()
+			.setConverterDateKm(converterDateOut);
+		converterKilometersEntityOut.setConverterKm(converterKmOut);
 	}
 }
