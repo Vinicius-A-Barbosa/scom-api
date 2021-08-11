@@ -8,7 +8,10 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,6 +32,7 @@ public class BogieShiftEntity implements Serializable {
 	@EmbeddedId
 	private BogieShiftPK bogieShiftPK;
 	
+	@ManyToOne
 	@OneToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_TRUQUE", referencedColumnName = "CODIGO_TRUQUE", insertable = false, updatable = false),
@@ -37,11 +41,12 @@ public class BogieShiftEntity implements Serializable {
 	private BogieKilometersEntity bogieKilometersEntityIn;
 	
 	@Transient
-	private Integer bogieKmIn = bogieKilometersEntityIn.getBogieKm();
+	private Integer bogieKmIn;
 	
 	@Column(name = "DATA_SAIDA_TRUQUE")
 	private LocalDate bogieDateOut;
 	
+	@ManyToOne
 	@OneToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_TRUQUE", referencedColumnName = "CODIGO_TRUQUE", insertable = false, updatable = false),
@@ -50,7 +55,7 @@ public class BogieShiftEntity implements Serializable {
 	private BogieKilometersEntity bogieKilometersEntityOut;
 	
 	@Transient
-	private Integer bogieKmOut = bogieKilometersEntityOut.getBogieKm();
+	private Integer bogieKmOut;
 	
 	@Column(name = "KM_ACUMULADO_TRUQUE")
 	private Integer bogieKmAccumulated;
@@ -59,7 +64,30 @@ public class BogieShiftEntity implements Serializable {
 		this.bogieShiftPK = new BogieShiftPK();
 	}
 	
-	public void setBogieShiftPK(String trainCode, String wagonPositionsDescription, String bogiePositionsDescription, LocalDate bogieDateIn) {
-		this.bogieShiftPK = new BogieShiftPK(trainCode, wagonPositionsDescription, bogiePositionsDescription, bogieDateIn);
+	public void setBogieShiftPK(String trainCode, String wagonPositionsDescription, String bogiePositionsDescription, String bogieCode, LocalDate bogieDateIn) {
+		this.bogieShiftPK = new BogieShiftPK(trainCode, wagonPositionsDescription, bogiePositionsDescription, bogieCode, bogieDateIn);
+	}
+	
+	@PostLoad
+	private void setKms() {
+		bogieKmIn = bogieKilometersEntityIn != null ? bogieKilometersEntityIn.getBogieKm() : null;
+		bogieKmOut = bogieKilometersEntityOut != null ? bogieKilometersEntityOut.getBogieKm() : null;
+	}
+	
+	@PrePersist
+	private void setKmEntities() {
+		bogieKilometersEntityIn = new BogieKilometersEntity();
+		bogieKilometersEntityIn.getBogieKilometersPK()
+			.setBogieCode(bogieShiftPK.getBogieCode());
+		bogieKilometersEntityIn.getBogieKilometersPK()
+			.setBogieDateKm(bogieShiftPK.getBogieDateIn());
+		bogieKilometersEntityIn.setBogieKm(bogieKmIn);
+		
+		bogieKilometersEntityOut = new BogieKilometersEntity();
+		bogieKilometersEntityOut.getBogieKilometersPK()
+			.setBogieCode(bogieShiftPK.getBogieCode());
+		bogieKilometersEntityOut.getBogieKilometersPK()
+			.setBogieDateKm(bogieDateOut);
+		bogieKilometersEntityOut.setBogieKm(bogieKmOut);
 	}
 }

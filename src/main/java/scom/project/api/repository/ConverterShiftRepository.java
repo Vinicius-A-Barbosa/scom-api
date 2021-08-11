@@ -16,7 +16,7 @@ public class ConverterShiftRepository extends BaseRepository<ConverterShiftEntit
 	}
 	
 	public List<ConverterShiftEntity> findAllByConverter(String searchedConverter) {
-		String whereClause = " WHERE m.converterShiftPK.converterCode = " + searchedConverter;
+		String whereClause = " WHERE m.converterShiftPK.converterCode = '" + searchedConverter + "'";
 		String orderBy = " ORDER BY m.converterShiftPK.converterDateIn";
 		String clause = whereClause + orderBy;
 		return super.findAll(clause, ConverterShiftEntity.class);

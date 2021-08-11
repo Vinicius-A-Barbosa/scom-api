@@ -27,16 +27,20 @@ public class BogieShiftPK implements Serializable {
 	@Column(name = "CODIGO_POSICOES_TRUQUE")
 	private String bogiePositionsDescription;
 	
+	@Column(name = "CODIGO_TRUQUE")
+	private String bogieCode;
+	
 	@Column(name = "DATA_ENTRADA_TRUQUE")
 	private LocalDate bogieDateIn;
 	
 	public BogieShiftPK() {
 	}
 	
-	public BogieShiftPK(String trainCode, String wagonPositionsDescription, String bogiePositionsDescription, LocalDate bogieDateIn) {
+	public BogieShiftPK(String trainCode, String wagonPositionsDescription, String bogiePositionsDescription, String bogieCode, LocalDate bogieDateIn) {
 		this.trainCode = trainCode;
 		this.wagonPositionsDescription = wagonPositionsDescription;
 		this.bogiePositionsDescription = bogiePositionsDescription;
+		this.bogieCode = bogieCode;
 		this.bogieDateIn = bogieDateIn;
 	}
 }

@@ -13,6 +13,6 @@ import scom.project.api.repository.entity.pk.BogieKilometersPK;
 public interface BogieKilometersRepository extends CrudRepository<BogieKilometersEntity, BogieKilometersPK> {
 	List<BogieKilometersEntity> findAll();
 	
-	@Query("Select b from BogieKilometersEntity b where b.bogieKilometersPK.bogieCode = ?1")
+	@Query("Select t from BogieKilometersEntity t where t.bogieKilometersPK.bogieCode = ?1")
 	List<BogieKilometersEntity> findAllByBogie(String searchedBogie);
 }
