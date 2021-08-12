@@ -8,7 +8,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,7 +31,7 @@ public class EngineActivitiesMaintenanceEntity implements Serializable {
 	@EmbeddedId
 	public EngineActivitiesMaintenancePK engineActivitiesMaintenancePK;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_MOTOR", referencedColumnName = "CODIGO_MOTOR", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_MANUTENCAO_MOTOR", referencedColumnName = "DATA_KM_MOTOR", insertable = false, updatable = false)
@@ -37,7 +39,7 @@ public class EngineActivitiesMaintenanceEntity implements Serializable {
 	private EngineKilometersEntity engineKilometersEntity;
 	
 	@Transient
-	private Integer engineKmMaintenance = engineKilometersEntity.getEngineKm();
+	private Integer engineKmMaintenance;
 	
 	@Column(name = "COMPRIMENTO_MEDIO_ESCOVAS")
 	private double averageLengthBrush;
@@ -106,5 +108,20 @@ public class EngineActivitiesMaintenanceEntity implements Serializable {
 													lengthBrushFourInside,
 													lengthBrushFourOutside
 												);
+	}
+	
+	@PostLoad
+	private void setKms() {
+		engineKmMaintenance = engineKilometersEntity != null ? engineKilometersEntity.getEngineKm() : null;
+	}
+	
+	@PrePersist
+	private void setKmEntities() {
+		engineKilometersEntity = new EngineKilometersEntity();
+		engineKilometersEntity.getEngineKilometersPK()
+			.setEngineCode(engineActivitiesMaintenancePK.getEngineCode());
+		engineKilometersEntity.getEngineKilometersPK()
+			.setEngineDateKm(engineActivitiesMaintenancePK.getEngineDateMaintenance());
+		engineKilometersEntity.setEngineKm(engineKmMaintenance);
 	}
 }

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -38,7 +40,7 @@ public class WheelActivitiesPreventiveEntity implements Serializable {
 	private WheelKilometersEntity wheelKilometersEntityFlangeRim;
 	
 	@Transient
-	private Integer preventiveKmFlangeRim = wheelKilometersEntityFlangeRim.getWheelKm();
+	private Integer preventiveKmFlangeRim;
 	
 	@Column(name = "ESPESSURA_FRISO_POLEGADA")
 	private String thicknessFlangeInch;
@@ -65,5 +67,28 @@ public class WheelActivitiesPreventiveEntity implements Serializable {
 	private String bearingSurface;
 	
 	public WheelActivitiesPreventiveEntity() {
+	}
+	
+	@PostLoad
+	private void setKms() {
+		preventiveKmFlangeRim = wheelKilometersEntityFlangeRim != null ? wheelKilometersEntityFlangeRim.getWheelKm() : null;
+		preventiveKmBearingSurface = wheelKilometersEntityBearingSurface != null ? wheelKilometersEntityBearingSurface.getWheelKm() : null;
+	}
+	
+	@PrePersist
+	private void setKmEntities() {
+		wheelKilometersEntityFlangeRim = new WheelKilometersEntity();
+		wheelKilometersEntityFlangeRim.getWheelKilometersPK()
+			.setWheelCode(wheelCode);
+		wheelKilometersEntityFlangeRim.getWheelKilometersPK()
+			.setWheelDateKm(preventiveDateFlangeRim);
+		wheelKilometersEntityFlangeRim.setWheelKm(preventiveKmFlangeRim);
+		
+		wheelKilometersEntityBearingSurface = new WheelKilometersEntity();
+		wheelKilometersEntityBearingSurface.getWheelKilometersPK()
+			.setWheelCode(wheelCode);
+		wheelKilometersEntityBearingSurface.getWheelKilometersPK()
+			.setWheelDateKm(preventiveDateBearingSurface);
+		wheelKilometersEntityBearingSurface.setWheelKm(preventiveKmBearingSurface);
 	}
 }

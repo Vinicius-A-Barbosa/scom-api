@@ -8,6 +8,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -28,6 +31,7 @@ public class AxleActivitiesLubricationEntity implements Serializable {
 	@EmbeddedId
 	private AxleActivitiesLubricationPK axleActivitiesLubricationPK;
 	
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_EIXO", referencedColumnName = "CODIGO_EIXO", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_LUBRIFICACAO_EIXO", referencedColumnName = "DATA_KM_EIXO", insertable = false, updatable = false)
@@ -35,10 +39,10 @@ public class AxleActivitiesLubricationEntity implements Serializable {
 	private AxleKilometersEntity axleKilometersEntity;
 	
 	@Transient
-	private Integer axcelKmLubrication = axleKilometersEntity.getAxleKm();
+	private Integer axleKmLubrication;
 	
 	@Column(name = "KM_DESDE_ULTIMA_LUBRIFICACAO_EIXO")
-	private Integer axcelKmSinceLastLubrication;
+	private Integer axleKmSinceLastLubrication;
 	
 	public AxleActivitiesLubricationEntity() {
 		this.axleActivitiesLubricationPK = new AxleActivitiesLubricationPK();
@@ -47,12 +51,27 @@ public class AxleActivitiesLubricationEntity implements Serializable {
 	public void setAxleActivitiesLubricationPK
 	(
 		String axleCode,
-		LocalDate axcelDateLubrication
+		LocalDate axleDateLubrication
 	)
 	{
 		this.axleActivitiesLubricationPK = new AxleActivitiesLubricationPK(
 													axleCode,
-													axcelDateLubrication
+													axleDateLubrication
 												);
+	}
+	
+	@PostLoad
+	private void setKms() {
+		axleKmLubrication = axleKilometersEntity != null ? axleKilometersEntity.getAxleKm() : null;
+	}
+	
+	@PrePersist
+	private void setKmEntities() {
+		axleKilometersEntity = new AxleKilometersEntity();
+		axleKilometersEntity.getAxleKilometersPK()
+			.setAxleCode(axleActivitiesLubricationPK.getAxleCode());
+		axleKilometersEntity.getAxleKilometersPK()
+			.setAxleDateKm(axleActivitiesLubricationPK.getAxleDateLubrication());
+		axleKilometersEntity.setAxleKm(axleKmLubrication);
 	}
 }

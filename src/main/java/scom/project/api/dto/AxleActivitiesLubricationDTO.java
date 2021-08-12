@@ -11,7 +11,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class AxleActivitiesLubricationDTO {
 	private String axleCode;
-	private LocalDate axcelDateLubrication;
-	private Integer axcelKmLubrication;
-	private Integer axcelKmSinceLastLubrication;
+	private LocalDate axleDateLubrication;
+	private Integer axleKmLubrication;
+	private Integer axleKmSinceLastLubrication;
 }

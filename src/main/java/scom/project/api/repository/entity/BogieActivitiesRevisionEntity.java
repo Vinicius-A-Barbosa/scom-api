@@ -8,7 +8,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,7 +31,7 @@ public class BogieActivitiesRevisionEntity  implements Serializable {
 	@EmbeddedId
 	private BogieActivitiesRevisionPK bogieActivitiesRevisionPK;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_TRUQUE", referencedColumnName = "CODIGO_TRUQUE", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_REVISAO_TRUQUE", referencedColumnName = "DATA_KM_TRUQUE", insertable = false, updatable = false)
@@ -37,7 +39,7 @@ public class BogieActivitiesRevisionEntity  implements Serializable {
 	private BogieKilometersEntity bogieKilometersEntity;
 	
 	@Transient
-	private Integer bogieKmRevision = bogieKilometersEntity.getBogieKm();
+	private Integer bogieKmRevision;
 	
 	@Column(name = "KM_DESDE_ULTIMA_REVISAO_TRUQUE")
 	private Integer sinceLastRevisionKm;
@@ -56,5 +58,20 @@ public class BogieActivitiesRevisionEntity  implements Serializable {
 													bogieCode,
 													bogieDateRevision
 												);
+	}
+	
+	@PostLoad
+	private void setKms() {
+		bogieKmRevision = bogieKilometersEntity != null ? bogieKilometersEntity.getBogieKm() : null;
+	}
+	
+	@PrePersist
+	private void setKmEntities() {
+		bogieKilometersEntity = new BogieKilometersEntity();
+		bogieKilometersEntity.getBogieKilometersPK()
+			.setBogieCode(bogieActivitiesRevisionPK.getBogieCode());
+		bogieKilometersEntity.getBogieKilometersPK()
+			.setBogieDateKm(bogieActivitiesRevisionPK.getBogieDateRevision());
+		bogieKilometersEntity.setBogieKm(bogieKmRevision);
 	}
 }
