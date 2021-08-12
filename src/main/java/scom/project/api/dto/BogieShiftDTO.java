@@ -13,6 +13,7 @@ public class BogieShiftDTO {
 	private String trainCode;
 	private String wagonPositionsDescription;
 	private String bogiePositionsDescription;
+	private String bogieCode;
 	private LocalDate bogieDateIn;
 	private Integer bogieKmIn;
 	private LocalDate bogieDateOut;

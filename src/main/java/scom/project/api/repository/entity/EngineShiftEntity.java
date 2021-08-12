@@ -8,7 +8,10 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,6 +32,7 @@ public class EngineShiftEntity implements Serializable {
 	@EmbeddedId
 	private EngineShiftPK engineShiftPK;
 	
+	@ManyToOne
 	@OneToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_MOTOR", referencedColumnName = "CODIGO_MOTOR", insertable = false, updatable = false),
@@ -37,11 +41,12 @@ public class EngineShiftEntity implements Serializable {
 	private EngineKilometersEntity engineKilometersEntityIn;
 	
 	@Transient
-	private Integer engineKmIn = engineKilometersEntityIn.getEngineKm();
+	private Integer engineKmIn;
 	
 	@Column(name = "DATA_SAIDA_MOTOR")
 	private LocalDate engineDateOut;
 	
+	@ManyToOne
 	@OneToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_MOTOR", referencedColumnName = "CODIGO_MOTOR", insertable = false, updatable = false),
@@ -50,7 +55,7 @@ public class EngineShiftEntity implements Serializable {
 	private EngineKilometersEntity engineKilometersEntityOut;
 	
 	@Transient
-	private Integer engineKmOut = engineKilometersEntityOut.getEngineKm();
+	private Integer engineKmOut;
 	
 	@Column(name = "KM_ACUMULADO_MOTOR")
 	private Integer engineKmAccumulated;
@@ -61,5 +66,28 @@ public class EngineShiftEntity implements Serializable {
 	
 	public void setEngineShiftPK(String bogieCode, String enginePositionsDescription, String engineCode, LocalDate engineDateIn) {
 		this.engineShiftPK = new EngineShiftPK(bogieCode, enginePositionsDescription, engineCode, engineDateIn);
+	}
+	
+	@PostLoad
+	private void setKms() {
+		engineKmIn = engineKilometersEntityIn != null ? engineKilometersEntityIn.getEngineKm() : null;
+		engineKmOut = engineKilometersEntityOut != null ? engineKilometersEntityOut.getEngineKm() : null;
+	}
+	
+	@PrePersist
+	private void setKmEntities() {
+		engineKilometersEntityIn = new EngineKilometersEntity();
+		engineKilometersEntityIn.getEngineKilometersPK()
+			.setEngineCode(engineShiftPK.getEngineCode());
+		engineKilometersEntityIn.getEngineKilometersPK()
+			.setEngineDateKm(engineShiftPK.getEngineDateIn());
+		engineKilometersEntityIn.setEngineKm(engineKmIn);
+		
+		engineKilometersEntityOut = new EngineKilometersEntity();
+		engineKilometersEntityOut.getEngineKilometersPK()
+			.setEngineCode(engineShiftPK.getEngineCode());
+		engineKilometersEntityOut.getEngineKilometersPK()
+			.setEngineDateKm(engineDateOut);
+		engineKilometersEntityOut.setEngineKm(engineKmOut);
 	}
 }

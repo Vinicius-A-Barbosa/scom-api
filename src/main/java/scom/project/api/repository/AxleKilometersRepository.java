@@ -13,6 +13,6 @@ import scom.project.api.repository.entity.pk.AxleKilometersPK;
 public interface AxleKilometersRepository extends CrudRepository<AxleKilometersEntity, AxleKilometersPK> {
 	List<AxleKilometersEntity> findAll();
 	
-	@Query("Select a from AxleKilometersEntity a where a.axleKilometersPK.axleCode = ?1")
+	@Query("Select t from AxleKilometersEntity t where t.axleKilometersPK.axleCode = ?1")
 	List<AxleKilometersEntity> findAllByAxle(String searchedAxle);
 }

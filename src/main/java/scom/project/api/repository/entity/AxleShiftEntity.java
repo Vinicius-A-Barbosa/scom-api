@@ -8,6 +8,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -28,6 +31,7 @@ public class AxleShiftEntity implements Serializable {
 	@EmbeddedId
 	private AxleShiftPK axleShiftPK;
 	
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_EIXO", referencedColumnName = "CODIGO_EIXO", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_ENTRADA_EIXO", referencedColumnName = "DATA_KM_EIXO", insertable = false, updatable = false)
@@ -35,11 +39,12 @@ public class AxleShiftEntity implements Serializable {
 	private AxleKilometersEntity axleKilometersEntityIn;
 	
 	@Transient
-	private Integer axleKmIn = axleKilometersEntityIn.getAxleKm();
+	private Integer axleKmIn;
 	
 	@Column(name = "DATA_SAIDA_EIXO")
 	private LocalDate axleDateOut;
 	
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_EIXO", referencedColumnName = "CODIGO_EIXO", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_SAIDA_EIXO", referencedColumnName = "DATA_KM_EIXO", insertable = false, updatable = false)
@@ -47,15 +52,39 @@ public class AxleShiftEntity implements Serializable {
 	private AxleKilometersEntity axleKilometersEntityOut;
 	
 	@Transient
-	private Integer axleKmOut = axleKilometersEntityOut.getAxleKm();
+	private Integer axleKmOut;
 	
 	@Column(name = "KM_ACUMULADO_EIXO")
 	private Integer axleKmAccumulated;
 	
 	public AxleShiftEntity() {
+		this.axleShiftPK = new AxleShiftPK();
 	}
 	
 	public void setAxleShiftPK(String bogieCode, String axlePositionsDescription, String axleCode, LocalDate axleDateIn) {
 		this.axleShiftPK = new AxleShiftPK(bogieCode, axlePositionsDescription, axleCode, axleDateIn);
+	}
+	
+	@PostLoad
+	private void setKms() {
+		axleKmIn = axleKilometersEntityIn != null ? axleKilometersEntityIn.getAxleKm() : null;
+		axleKmOut = axleKilometersEntityOut != null ? axleKilometersEntityOut.getAxleKm() : null;
+	}
+	
+	@PrePersist
+	private void setKmEntities() {
+		axleKilometersEntityIn = new AxleKilometersEntity();
+		axleKilometersEntityIn.getAxleKilometersPK()
+			.setAxleCode(axleShiftPK.getAxleCode());
+		axleKilometersEntityIn.getAxleKilometersPK()
+			.setAxleDateKm(axleShiftPK.getAxleDateIn());
+		axleKilometersEntityIn.setAxleKm(axleKmIn);
+		
+		axleKilometersEntityOut = new AxleKilometersEntity();
+		axleKilometersEntityOut.getAxleKilometersPK()
+			.setAxleCode(axleShiftPK.getAxleCode());
+		axleKilometersEntityOut.getAxleKilometersPK()
+			.setAxleDateKm(axleDateOut);
+		axleKilometersEntityOut.setAxleKm(axleKmOut);
 	}
 }

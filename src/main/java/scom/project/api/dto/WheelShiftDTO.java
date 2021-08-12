@@ -11,7 +11,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class WheelShiftDTO {
 	private String axleCode;
-	private String wheelPositionsCode;
+	private String wheelPositionsDescription;
 	private String wheelCode;
 	private LocalDate wheelDateIn;
 	private Integer wheelKmIn;
