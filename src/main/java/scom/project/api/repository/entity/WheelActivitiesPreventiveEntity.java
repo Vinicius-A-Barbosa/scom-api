@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -33,6 +34,7 @@ public class WheelActivitiesPreventiveEntity implements Serializable {
 	@Column(name = "DATA_PREVENTIVA_RODA_FRISO_ARO")
 	private LocalDate preventiveDateFlangeRim;
 	
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_RODA", referencedColumnName = "CODIGO_RODA", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_PREVENTIVA_RODA_FRISO_ARO", referencedColumnName = "DATA_KM_RODA", insertable = false, updatable = false)
@@ -54,6 +56,7 @@ public class WheelActivitiesPreventiveEntity implements Serializable {
 	@Column(name = "DATA_PREVENTIVA_RODA_SUPERFICIE_ROLAMENTO")
 	private LocalDate preventiveDateBearingSurface;
 	
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_RODA", referencedColumnName = "CODIGO_RODA", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_PREVENTIVA_RODA_SUPERFICIE_ROLAMENTO", referencedColumnName = "DATA_KM_RODA", insertable = false, updatable = false)
@@ -61,7 +64,7 @@ public class WheelActivitiesPreventiveEntity implements Serializable {
 	private WheelKilometersEntity wheelKilometersEntityBearingSurface;
 	
 	@Transient
-	private Integer preventiveKmBearingSurface = wheelKilometersEntityBearingSurface.getWheelKm();
+	private Integer preventiveKmBearingSurface;
 	
 	@Column(name = "SUPERFICIE_ROLAMENTO")
 	private String bearingSurface;

@@ -232,10 +232,10 @@ public class ConverterActivitiesCheckEntity implements Serializable {
 	private double maxVelocityOut;
 
 	@Column(name = "TIPO_ESCOVA_ENTRADA")
-	private double brushTypeIn;
+	private String brushTypeIn;
 
 	@Column(name = "TIPO_ESCOVA_SAIDA")
-	private double brushTypeOut;
+	private String brushTypeOut;
 
 	@Column(name = "REFERENCIA_FORCA_MOLA_ENTRADA")
 	private double springForceReferenceIn;

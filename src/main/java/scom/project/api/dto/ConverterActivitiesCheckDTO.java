@@ -75,8 +75,8 @@ public class ConverterActivitiesCheckDTO {
 	private Boolean balancePhasesOut;
 	private double maxVelocityIn;
 	private double maxVelocityOut;
-	private double brushTypeIn;
-	private double brushTypeOut;
+	private String brushTypeIn;
+	private String brushTypeOut;
 	private double springForceReferenceIn;
 	private double springForceReferenceOut;
 	private double magnetForceIn;
