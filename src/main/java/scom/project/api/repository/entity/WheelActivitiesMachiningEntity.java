@@ -8,6 +8,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -28,6 +31,7 @@ public class WheelActivitiesMachiningEntity implements Serializable {
 	@EmbeddedId
 	private WheelActivitiesMachiningPK wheelActivitiesMachiningPK;
 	
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_RODA", referencedColumnName = "CODIGO_RODA", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_USINAGEM_RODA", referencedColumnName = "DATA_KM_RODA", insertable = false, updatable = false)
@@ -35,7 +39,7 @@ public class WheelActivitiesMachiningEntity implements Serializable {
 	private WheelKilometersEntity wheelKilometersEntity;
 	
 	@Transient
-	private Integer wheelKmMachining = wheelKilometersEntity.getWheelKm();
+	private Integer wheelKmMachining;
 	
 
 	@Column(name = "KM_DESDE_ULTIMA_USINAGEM_RODA")
@@ -79,5 +83,20 @@ public class WheelActivitiesMachiningEntity implements Serializable {
 													wheelCode,
 													wheelDateMachining
 												);
+	}
+	
+	@PostLoad
+	private void setKms() {
+		wheelKmMachining = wheelKilometersEntity != null ? wheelKilometersEntity.getWheelKm() : null;
+	}
+	
+	@PrePersist
+	private void setKmEntities() {
+		wheelKilometersEntity = new WheelKilometersEntity();
+		wheelKilometersEntity.getWheelKilometersPK()
+			.setWheelCode(wheelActivitiesMachiningPK.getWheelCode());
+		wheelKilometersEntity.getWheelKilometersPK()
+			.setWheelDateKm(wheelActivitiesMachiningPK.getWheelDateMachining());
+		wheelKilometersEntity.setWheelKm(wheelKmMachining);
 	}
 }

@@ -8,7 +8,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,7 +31,7 @@ public class EngineActivitiesCheckEntity implements Serializable {
 	@EmbeddedId
 	private EngineActivitiesCheckPK engineActivitiesCheckPK;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_MOTOR", referencedColumnName = "CODIGO_MOTOR", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_ENSAIO_ENTRADA", referencedColumnName = "DATA_KM_MOTOR", insertable = false, updatable = false)
@@ -37,13 +39,13 @@ public class EngineActivitiesCheckEntity implements Serializable {
 	private EngineKilometersEntity engineKilometersEntityIn;
 	
 	@Transient
-	private Integer checkKmIn = engineKilometersEntityIn.getEngineKm();
+	private Integer checkKmIn;
 	
 
 	@Column(name = "DATA_ENSAIO_SAIDA")
 	private LocalDate checkDateOut;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_MOTOR", referencedColumnName = "CODIGO_MOTOR", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_ENSAIO_SAIDA", referencedColumnName = "DATA_KM_MOTOR", insertable = false, updatable = false)
@@ -51,7 +53,7 @@ public class EngineActivitiesCheckEntity implements Serializable {
 	private EngineKilometersEntity engineKilometersEntityOut;
 	
 	@Transient
-	private Integer checkKmOut = engineKilometersEntityOut.getEngineKm();
+	private Integer checkKmOut;
 	
 	@Column(name = "NUMERO_ORDEM_SERVICO")
 	private String serviceOrderNumber;
@@ -165,10 +167,10 @@ public class EngineActivitiesCheckEntity implements Serializable {
 	private double maxVelocityOut;
 	
 	@Column(name = "TIPO_ESCOVA_ENTRADA")
-	private double brushTypeIn;
+	private String brushTypeIn;
 	
 	@Column(name = "TIPO_ESCOVA_SAIDA")
-	private double brushTypeOut;
+	private String brushTypeOut;
 	
 	@Column(name = "REFERENCIA_FORCA_MOLA_ENTRADA")
 	private double springForceReferenceIn;
@@ -213,5 +215,28 @@ public class EngineActivitiesCheckEntity implements Serializable {
 													engineCheckTypeCode,
 													checkDateIn
 												);
+	}
+	
+	@PostLoad
+	private void setKms() {
+		checkKmIn = engineKilometersEntityIn != null ? engineKilometersEntityIn.getEngineKm() : null;
+		checkKmOut = engineKilometersEntityOut != null ? engineKilometersEntityOut.getEngineKm() : null;
+	}
+	
+	@PrePersist
+	private void setKmEntities() {
+		engineKilometersEntityIn = new EngineKilometersEntity();
+		engineKilometersEntityIn.getEngineKilometersPK()
+			.setEngineCode(engineActivitiesCheckPK.getEngineCode());
+		engineKilometersEntityIn.getEngineKilometersPK()
+			.setEngineDateKm(engineActivitiesCheckPK.getCheckDateIn());
+		engineKilometersEntityIn.setEngineKm(checkKmIn);
+		
+		engineKilometersEntityOut = new EngineKilometersEntity();
+		engineKilometersEntityOut.getEngineKilometersPK()
+			.setEngineCode(engineActivitiesCheckPK.getEngineCode());
+		engineKilometersEntityOut.getEngineKilometersPK()
+			.setEngineDateKm(checkDateOut);
+		engineKilometersEntityOut.setEngineKm(checkKmOut);
 	}
 }

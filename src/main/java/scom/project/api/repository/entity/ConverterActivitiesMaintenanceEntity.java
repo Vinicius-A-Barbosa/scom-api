@@ -8,7 +8,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,7 +31,7 @@ public class ConverterActivitiesMaintenanceEntity implements Serializable {
 	@EmbeddedId
 	private ConverterActivitiesMaintenancePK converterActivitiesMaintenancePK;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_CONVERSOR", referencedColumnName = "CODIGO_CONVERSOR", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_MANUTENCAO_CONVERSOR", referencedColumnName = "DATA_KM_CONVERSOR", insertable = false, updatable = false)
@@ -37,7 +39,7 @@ public class ConverterActivitiesMaintenanceEntity implements Serializable {
 	private ConverterKilometersEntity converterKilometersEntity;
 	
 	@Transient
-	private Integer converterKmMaintenance = converterKilometersEntity.getConverterKm();
+	private Integer converterKmMaintenance;
 
 	@Column(name = "COMPRIMENTO_MEDIO_ESCOVAS")
 	private double averageLengthBrush;
@@ -91,5 +93,20 @@ public class ConverterActivitiesMaintenanceEntity implements Serializable {
 													lengthBrushLeftInside,
 													lengthBrushLeftOutside
 												);
+	}
+	
+	@PostLoad
+	private void setKms() {
+		converterKmMaintenance = converterKilometersEntity != null ? converterKilometersEntity.getConverterKm() : null;
+	}
+	
+	@PrePersist
+	private void setKmEntities() {
+		converterKilometersEntity = new ConverterKilometersEntity();
+		converterKilometersEntity.getConverterKilometersPK()
+			.setConverterCode(converterActivitiesMaintenancePK.getConverterCode());
+		converterKilometersEntity.getConverterKilometersPK()
+			.setConverterDateKm(converterActivitiesMaintenancePK.getConverterDateMaintenance());
+		converterKilometersEntity.setConverterKm(converterKmMaintenance);
 	}
 }

@@ -8,7 +8,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,7 +31,7 @@ public class ConverterActivitiesCheckEntity implements Serializable {
 	@EmbeddedId
 	private ConverterActivitiesCheckPK converterActivitiesCheckPK;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_CONVERSOR", referencedColumnName = "CODIGO_CONVERSOR", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_ENSAIO_ENTRADA", referencedColumnName = "DATA_KM_CONVERSOR", insertable = false, updatable = false)
@@ -37,12 +39,12 @@ public class ConverterActivitiesCheckEntity implements Serializable {
 	private ConverterKilometersEntity converterKilometersEntityIn;
 	
 	@Transient
-	private Integer checkKmIn = converterKilometersEntityIn.getConverterKm();
+	private Integer checkKmIn;
 
 	@Column(name = "DATA_ENSAIO_SAIDA")
 	private LocalDate checkDateOut;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_CONVERSOR", referencedColumnName = "CODIGO_CONVERSOR", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_ENSAIO_SAIDA", referencedColumnName = "DATA_KM_CONVERSOR", insertable = false, updatable = false)
@@ -50,7 +52,7 @@ public class ConverterActivitiesCheckEntity implements Serializable {
 	private ConverterKilometersEntity converterKilometersEntityOut;
 	
 	@Transient
-	private Integer checkKmOut = converterKilometersEntityOut.getConverterKm();
+	private Integer checkKmOut;
 
 	@Column(name = "NUMERO_ORDEM_SERVICO")
 	private String serviceOrderNumber;
@@ -230,10 +232,10 @@ public class ConverterActivitiesCheckEntity implements Serializable {
 	private double maxVelocityOut;
 
 	@Column(name = "TIPO_ESCOVA_ENTRADA")
-	private double brushTypeIn;
+	private String brushTypeIn;
 
 	@Column(name = "TIPO_ESCOVA_SAIDA")
-	private double brushTypeOut;
+	private String brushTypeOut;
 
 	@Column(name = "REFERENCIA_FORCA_MOLA_ENTRADA")
 	private double springForceReferenceIn;
@@ -272,5 +274,28 @@ public class ConverterActivitiesCheckEntity implements Serializable {
 													converterCheckTypeCode,
 													checkDateIn
 												);
+	}
+	
+	@PostLoad
+	private void setKms() {
+		checkKmIn = converterKilometersEntityIn != null ? converterKilometersEntityIn.getConverterKm() : null;
+		checkKmOut = converterKilometersEntityOut != null ? converterKilometersEntityOut.getConverterKm() : null;
+	}
+	
+	@PrePersist
+	private void setKmEntities() {
+		converterKilometersEntityIn = new ConverterKilometersEntity();
+		converterKilometersEntityIn.getConverterKilometersPK()
+			.setConverterCode(converterActivitiesCheckPK.getConverterCode());
+		converterKilometersEntityIn.getConverterKilometersPK()
+			.setConverterDateKm(converterActivitiesCheckPK.getCheckDateIn());
+		converterKilometersEntityIn.setConverterKm(checkKmIn);
+		
+		converterKilometersEntityOut = new ConverterKilometersEntity();
+		converterKilometersEntityOut.getConverterKilometersPK()
+			.setConverterCode(converterActivitiesCheckPK.getConverterCode());
+		converterKilometersEntityOut.getConverterKilometersPK()
+			.setConverterDateKm(checkDateOut);
+		converterKilometersEntityOut.setConverterKm(checkKmOut);
 	}
 }
