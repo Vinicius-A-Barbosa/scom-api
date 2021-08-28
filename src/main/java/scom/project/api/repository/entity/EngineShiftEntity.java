@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -33,7 +32,6 @@ public class EngineShiftEntity implements Serializable {
 	private EngineShiftPK engineShiftPK;
 	
 	@ManyToOne
-	@OneToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_MOTOR", referencedColumnName = "CODIGO_MOTOR", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_ENTRADA_MOTOR", referencedColumnName = "DATA_KM_MOTOR", insertable = false, updatable = false)
@@ -47,7 +45,6 @@ public class EngineShiftEntity implements Serializable {
 	private LocalDate engineDateOut;
 	
 	@ManyToOne
-	@OneToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_MOTOR", referencedColumnName = "CODIGO_MOTOR", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_SAIDA_MOTOR", referencedColumnName = "DATA_KM_MOTOR", insertable = false, updatable = false)

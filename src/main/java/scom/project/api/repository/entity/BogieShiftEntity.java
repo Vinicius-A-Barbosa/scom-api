@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -33,7 +32,6 @@ public class BogieShiftEntity implements Serializable {
 	private BogieShiftPK bogieShiftPK;
 	
 	@ManyToOne
-	@OneToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_TRUQUE", referencedColumnName = "CODIGO_TRUQUE", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_ENTRADA_TRUQUE", referencedColumnName = "DATA_KM_TRUQUE", insertable = false, updatable = false)
@@ -47,7 +45,6 @@ public class BogieShiftEntity implements Serializable {
 	private LocalDate bogieDateOut;
 	
 	@ManyToOne
-	@OneToOne
 	@JoinColumns({
 		@JoinColumn(name = "CODIGO_TRUQUE", referencedColumnName = "CODIGO_TRUQUE", insertable = false, updatable = false),
 		@JoinColumn(name = "DATA_SAIDA_TRUQUE", referencedColumnName = "DATA_KM_TRUQUE", insertable = false, updatable = false)
