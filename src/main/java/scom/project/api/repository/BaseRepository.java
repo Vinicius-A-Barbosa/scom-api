@@ -77,6 +77,36 @@ public class BaseRepository<T> {
 		return resultList;
 	}
 	
+	public List<T> findPageable(Integer page, Class<T> c) {
+		List<T> resultList;
+		try {
+			em.clear();
+			String initialQuery = "SELECT m from " + c.getSimpleName() + " m ";
+			Query query = em.createQuery(initialQuery, c);
+			query.setFirstResult(page);
+			query.setMaxResults(10);
+			query.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
+			resultList = query.getResultList(); 
+		} finally {
+			em.close();
+		}
+		return resultList;
+	}
+	
+	public Long getTotal(Class<T> c) {
+		Long result;
+		try {
+			em.clear();
+			String queryString = "SELECT COUNT(*) from " + c.getSimpleName() + " m WHERE 1=1";
+			Query query = em.createQuery(queryString);
+			query.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
+			result = (Long) query.getSingleResult();
+		} finally {
+			em.close();
+		}
+		return result;
+	}
+	
 	public void truncateTable(Class<T> entityType) {
 		try {
 			em.getTransaction().begin();
