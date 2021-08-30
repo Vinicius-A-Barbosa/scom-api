@@ -1,6 +1,7 @@
 package scom.project.api.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,4 +16,6 @@ public class LastKmTrainDTO {
 	private String trainSerie;
 	private LocalDate trainDateKm;
 	private Integer trainKm;
+	private List<TrainWithBogiesDTO> trainWithBogiesList;
+	private List<TrainWithConvertersDTO> trainWithConvertersList;
 }

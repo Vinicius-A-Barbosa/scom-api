@@ -2,18 +2,20 @@ package scom.project.api.repository.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@EqualsAndHashCode
 @Getter
 @Setter
 @Table(name = "ULTIMO_KM_TREM")
@@ -36,6 +38,12 @@ public class LastKmTrainEntity implements Serializable {
 	
 	@Column(name = "KM_TREM")
 	private Integer trainKm;
+	
+	@OneToMany(mappedBy = "trainCode", cascade = CascadeType.ALL)
+	private List<TrainWithBogiesEntity> trainWithBogiesList = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "trainCode", cascade = CascadeType.ALL)
+	private List<TrainWithConvertersEntity> trainWithConvertersList = new ArrayList<>();
 	
 	public LastKmTrainEntity() {
 	}
