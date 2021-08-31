@@ -7,32 +7,34 @@ public class TrainInsertionStringGenerator {
 	@Test
 	public void generateEquipmentsInsertion() {
 		InsertTrain insertTrain = new InsertTrain();
-		insertTrain.generateTrains(1, 3);
-		insertTrain.generateKmTrains(1, 3);
+		Integer initialValue = 31;
+		Integer quantity = 5;
+		insertTrain.generateTrains(initialValue, quantity);
+		insertTrain.generateKmTrains(initialValue, quantity);
 		
 		InsertConverter insertConverter = new InsertConverter();
-		insertConverter.generateConverters(1, 3);
-		insertConverter.generateKmConverters(1, 3);
-		insertConverter.generateShiftConverters(1, 3);
+		insertConverter.generateConverters(initialValue, quantity);
+		insertConverter.generateKmConverters(initialValue, quantity);
+		insertConverter.generateShiftConverters(initialValue, quantity);
 		
 		InsertBogie insertBogie = new InsertBogie();
-		insertBogie.generateBogies(1, 3);
-		insertBogie.generateKmBogies(1, 3);
-		insertBogie.generateShiftBogies(1, 3);
+		insertBogie.generateBogies(initialValue, quantity);
+		insertBogie.generateKmBogies(initialValue, quantity);
+		insertBogie.generateShiftBogies(initialValue, quantity);
 		
 		InsertEngine insertEngine = new InsertEngine();
-		insertEngine.generateEngines(1, 3);
-		insertEngine.generateKmEngines(1, 3);
-		insertEngine.generateShiftEngines(1, 3);
+		insertEngine.generateEngines(initialValue, quantity);
+		insertEngine.generateKmEngines(initialValue, quantity);
+		insertEngine.generateShiftEngines(initialValue, quantity);
 		
 		InsertAxle insertAxle = new InsertAxle();
-		insertAxle.generateAxles(1, 3);
-		insertAxle.generateKmAxles(1, 3);
-		insertAxle.generateShiftAxles(1, 3);
+		insertAxle.generateAxles(initialValue, quantity);
+		insertAxle.generateKmAxles(initialValue, quantity);
+		insertAxle.generateShiftAxles(initialValue, quantity);
 		
 		InsertWheel insertWheel = new InsertWheel();
-		insertWheel.generateWheels(1, 3);
-		insertWheel.generateKmWheels(1, 3);
-		insertWheel.generateShiftWheels(1, 3);
+		insertWheel.generateWheels(initialValue, quantity);
+		insertWheel.generateKmWheels(initialValue, quantity);
+		insertWheel.generateShiftWheels(initialValue, quantity);
 	}
 }

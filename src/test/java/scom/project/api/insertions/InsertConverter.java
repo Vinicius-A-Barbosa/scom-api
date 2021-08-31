@@ -18,13 +18,18 @@ public class InsertConverter {
 	public void generateConverters(Integer initial, Integer quantity) {
 		StringBuilder replace = new StringBuilder();
 		replace.append("REPLACE INTO `EQUIPAMENTOS_CONVERSOR` VALUES\n");
-		
-		for (Integer count = initial; count < initial + quantity * 2; count ++) {
-			replace.append(generateConverter(count));
-			if (count < initial + quantity * 2 - 1) {
-				replace.append(",\n");
-			} else {					
-				replace.append(";\n");
+
+		Integer converter = initial * 2 - 1;
+		for (Integer count = initial; count < initial + quantity; count ++) {
+			Integer initialConverter = count * 2 - 1;
+			for (Integer position = initialConverter; position < initialConverter + 2; position ++) {				
+				replace.append(generateConverter(converter));
+				if (position == initialConverter + 1 && count == initial + quantity - 1) {
+					replace.append(";\n");
+				} else {					
+					replace.append(",\n");
+				}
+				converter++;
 			}
 		}
 		System.out.println(replace.toString());
@@ -41,16 +46,17 @@ public class InsertConverter {
 	public void generateKmConverters(Integer initial, Integer quantity) {
 		StringBuilder replace = new StringBuilder();
 		replace.append("REPLACE INTO `QUILOMETRAGEM_CONVERSOR` VALUES\n");
-		
+		Integer converter = initial * 2 - 1;
 		for (Integer count = initial; count < initial + quantity; count ++) {
 			Integer initialConverter = count * 2 - 1;
-			for (Integer converter = initialConverter; converter < initialConverter + 2; converter ++) {				
+			for (Integer position = initialConverter; position < initialConverter + 2; position ++) {				
 				replace.append(generateKmConverter(converter, count));
-				if (converter == initialConverter + 1 && count == initial + quantity - 1) {
+				if (position == initialConverter + 1 && count == initial + quantity - 1) {
 					replace.append(";\n");
 				} else {					
 					replace.append(",\n");
 				}
+				converter++;
 			}
 		}
 		System.out.println(replace.toString());
@@ -82,18 +88,19 @@ public class InsertConverter {
 	public void generateShiftConverters(Integer initial, Integer quantity) {
 		StringBuilder replace = new StringBuilder();
 		replace.append("REPLACE INTO `MOVIMENTACOES_CONVERSOR` VALUES\n");
-		
+		Integer converter = initial * 2 - 1;
 		for (Integer count = initial; count < initial + quantity; count ++) {
 			Integer initialConverter = count * 2 - 1;
 			Integer car = 0;
-			for (Integer converter = initialConverter; converter < initialConverter + 2; converter ++) {				
+			for (Integer position = initialConverter; position < initialConverter + 2; position ++) {				
 				replace.append(generateShiftConverter(converter, count, car));
-				if (converter == initialConverter + 1 && count == initial + quantity - 1) {
+				if (position == initialConverter + 1 && count == initial + quantity - 1) {
 					replace.append(";\n");
 				} else {					
 					replace.append(",\n");
 				}
 				car++;
+				converter++;
 			}
 		}
 		System.out.println(replace.toString());

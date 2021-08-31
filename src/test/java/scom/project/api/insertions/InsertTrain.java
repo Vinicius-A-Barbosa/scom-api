@@ -12,7 +12,7 @@ public class InsertTrain {
 		
 		for (Integer count = initial; count < initial + quantity; count ++) {
 			replace.append(generateTrain(count));
-			if (count < quantity) {
+			if (count < initial + quantity - 1) {
 				replace.append(",\n");
 			} else {					
 				replace.append(";\n");
@@ -35,7 +35,7 @@ public class InsertTrain {
 		
 		for (Integer count = initial; count < initial + quantity; count ++) {
 			replace.append(generateKmTrain(count));
-			if (count < quantity) {
+			if (count < initial + quantity - 1) {
 				replace.append(",\n");
 			} else {					
 				replace.append(";\n");
